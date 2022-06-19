@@ -101,8 +101,6 @@ i-UR ADE extension for the 3D City Databaseに記載されたi-URの名前空間
 
 - 手順5．手順1でインストールした3D City Database Importer/Exporterを起動し、ADEManagerから、更新したi-URのADEフォルダ（3DCityDB-Importer-Exporter/ade-extensions/iur-ade-1.4.0）を選択し、ADEとして登録する。
 
-本ソフトウェアの動作には前提ソフトウェア（商用ソフトウェア）が必要で、単独では利用できません。位相一貫性検証機能の実装例として参考にして下さい。
-
 なお、本ソフトウェアはドイツvirtualcitysystems社が開発した製品機能を、オープンソースとして公開するためご提供を頂いたものです。virtualcitysystems社に感謝します。
 
 ## 動作環境、前提ソフトウェア
