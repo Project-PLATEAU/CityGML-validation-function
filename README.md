@@ -41,7 +41,20 @@
 |`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/schemas/urt/1.4/publicTransit.xsd`|https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/schemas/urt/1.5/publicTransit.xsd|
 
 ----
-置換には、Visual Studio CodeやXMLEDITOR.NETなどのツールをご利用ください。  
+置換には、Visual Studio CodeやXMLEDITOR.NETなどのツールをご利用ください。 UNIXコマンドラインでディレクトリ内の複数ファイルを一括で置換したい場合は以下のコマンドが利用できます。
+```bash
+for f in `ls`;
+do
+if [[ "$f" = *.gml ]] && [[ "$f" != renamed_* ]]; then
+    echo $f
+    sed -e 's!http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/\(ur[o|f|g|t]\)/1.4!https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/\1/1.5!g'\
+    -e 's!http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/schemas/\(ur[o|f|g|t]\)/1.4/!https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/schemas/\1/1.5!g' $f > renamed_$f
+fi
+done
+```
+
+
+
 名前空間及びschemaLocationは、3D都市モデル（CityGML形式）の、`<core:CityModel>`の開始タグに記載されています。  
 置換前後の3D都市モデル（CityGML形式）の例を以下に示します。太字部分が置換対象となる箇所です。  
 #### 置換前
