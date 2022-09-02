@@ -52,9 +52,6 @@ if [[ "$f" = *.gml ]] && [[ "$f" != renamed_* ]]; then
 fi
 done
 ```
-
-
-
 名前空間及びschemaLocationは、3D都市モデル（CityGML形式）の、`<core:CityModel>`の開始タグに記載されています。  
 置換前後の3D都市モデル（CityGML形式）の例を以下に示します。太字部分が置換対象となる箇所です。  
 #### 置換前
