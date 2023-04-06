@@ -4,104 +4,11 @@
 
 3D都市モデルの品質管理支援のための書式・概念一貫性検証機能の利用方法のチュートリアル文書です。
 
-本ドキュメントで紹介するソフトウェアは、国土交通省の[Project PLATEAU](https://www.mlit.go.jp/plateau/)において3D都市モデルの品質管理支援のため構築した[品質評価システム](https://github.com/Project-PLATEAU/CityGML-evaluation-system)で利用した、ドイツ[virtualcitysystems社](https://vc.systems/en/)のソフトウェア製品[VC Database](https://vc.systems/en/products/vc-database/)の機能の一部です。OSSとしてGitHub上で公開されたため、その使い方を紹介します。virtualcitysystems社に感謝します。
+本ドキュメントで紹介するソフトウェアは、国土交通省の[Project PLATEAU](https://www.mlit.go.jp/plateau/)において3D都市モデルの品質管理支援のため構築した[品質評価システム](https://github.com/Project-PLATEAU/CityGML-evaluation-system)で利用した、ドイツ[virtualcitysystems社](https://vc.systems/en/)のソフトウェア製品[VC Database](https://vc.systems/en/products/vc-database/)の機能の一部です。なお、OSSとしてGitHub上で公開されたものから、i-UR 2.0に対応するべく一部改修を行う必要があります。
 
 * i-UR ADE extension for the 3D City Database: https://github.com/3dcitydb/iur-ade-citydb
 
-対応データ形式は、内閣府地方創生推進事務局が定めた[i-都市再生技術仕様案 v1.4 (iｰUR 1.4)](https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur)に従い拡張された[OGC CityGML 2.0](https://www.ogc.org/standards/citygml)形式です。なお、i-URを利用していない通常のCityGML 2.0形式にも対応しています。
-
-
-**ただし、i-UR1.4は2021年9月にi-UR1.5に改定されました。これに伴い、URL とバージョンが変更されました。**
-
-そのため、本ソフトウェアの利用にあたり、3D都市モデル（CityGML形式）及びソフトウェアに記述された旧URL及び旧バージョンを、新しいURL及び新しいバージョンに更新する必要があります。
-
-具体的には以下の手順に従い、更新してください。
-
-## 1．3D都市モデル（CityGML形式）に記述されたURLの更新
-
-3D都市モデルのファイル内の名前空間とschemaLocationに記載されている旧URLを新しいURLに更新（テキスト置換）してください。<br>
-対象となる記述を下表に示します。
-
-- 名前空間<br>
-
-|旧URL（i-UR1.4のURL）|新しいURL（i-UR1.5のURL）|
-| - | - |
-|`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/uro/1.4`|https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/uro/1.5|
-|`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/urf/1.4`|https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/urf/1.5|
-|`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/urg/1.4`|https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/urg/1.5|
-|`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/urt/1.4`|https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/urt/1.5|
-
-- schemaLocation<br>
-
-|旧URL（i-UR1.4のURL）|新しいURL（i-UR1.5のURL）|
-| - | - |
-|`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/schemas/uro/1.4/urbanObject.xsd`|https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/schemas/uro/1.5/urbanObject.xsd|
-|`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/schemas/urf/1.4/urbanFunction.xsd`|https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/schemas/urf/1.5/urbanFunction.xsd|
-|`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/schemas/urg/1.4/statisticalGrid.xsd`|https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/schemas/urg/1.5/statisticalGrid.xsd|
-|`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/schemas/urt/1.4/publicTransit.xsd`|https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/schemas/urt/1.5/publicTransit.xsd|
-
-----
-置換には、Visual Studio CodeやXMLEDITOR.NETなどのツールをご利用ください。  
-名前空間及びschemaLocationは、3D都市モデル（CityGML形式）の、`<core:CityModel>`の開始タグに記載されています。  
-置換前後の3D都市モデル（CityGML形式）の例を以下に示します。太字部分が置換対象となる箇所です。  
-#### 置換前
-<core:CityModel xmlns:uro="**`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/uro/1.4`**" xmlns:core="http://www.opengis.net/citygml/2.0"
-xmlns:luse="http://www.opengis.net/citygml/landuse/2.0" xmlns:bldg="http://www.opengis.net/citygml/building/2.0"
-xmlns:tran="http://www.opengis.net/citygml/transportation/2.0" xmlns:grp="http://www.opengis.net/citygml/cityobjectgroup/2.0"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink"
-xsi:schemaLocation="**`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/uro/1.4
-http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/schemas/uro/1.4/urbanObject.xsd`** http://www.opengis.net/citygml/2.0
-http://schemas.opengis.net/citygml/2.0/cityGMLBase.xsd http://www.opengis.net/citygml/landuse/2.0 http://schemas.opengis.net/citygml/landuse/2.0/landUse.xsd
-http://www.opengis.net/citygml/building/2.0 http://schemas.opengis.net/citygml/building/2.0/building.xsd http://www.opengis.net/citygml/transportation/2.0
-http://schemas.opengis.net/citygml/transportation/2.0/transportation.xsd http://www.opengis.net/citygml/cityobjectgroup/2.0
-http://schemas.opengis.net/citygml/cityobjectgroup/2.0/cityObjectGroup.xsd http://www.opengis.net/gml http://schemas.opengis.net/gml/3.1.1/base/gml.xsd">
-#### 置換後
-<core:CityModel xmlns:uro="**`https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/uro/1.5`**" 
-xmlns:core="http://www.opengis.net/citygml/2.0"
-xmlns:luse="http://www.opengis.net/citygml/landuse/2.0" xmlns:bldg="http://www.opengis.net/citygml/building/2.0"
-xmlns:tran="http://www.opengis.net/citygml/transportation/2.0" xmlns:grp="http://www.opengis.net/citygml/cityobjectgroup/2.0"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink"
-xsi:schemaLocation="**`https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/uro/1.5 https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/schemas/uro/1.5/urbanObject.xsd`**  
-http://www.opengis.net/citygml/2.0 http://schemas.opengis.net/citygml/2.0/cityGMLBase.xsd http://www.opengis.net/citygml/landuse/2.0
-http://schemas.opengis.net/citygml/landuse/2.0/landUse.xsd http://www.opengis.net/citygml/building/2.0 http://schemas.opengis.net/citygml/building/2.0/building.xsd
-http://www.opengis.net/citygml/transportation/2.0 http://schemas.opengis.net/citygml/transportation/2.0/transportation.xsd http://www.opengis.net/citygml/cityobjectgroup/2.0
-http://schemas.opengis.net/citygml/cityobjectgroup/2.0/cityObjectGroup.xsd http://www.opengis.net/gml http://schemas.opengis.net/gml/3.1.1/base/gml.xsd">
-
-## 2．ソフトウェアに記述されたURL及びバージョンの更新
-
-i-UR ADE extension for the 3D City Databaseに記載されたi-URの名前空間とschemaLocationに記載されている旧URLを新しいURLに更新（テキスト置換）してください。また、i-URのバージョンを新しいバージョンに更新（テキスト置換）してください。
-
-手順及び対象となるファイルと更新内容を下表に示します。
-
-- 手順1．3D City DatabaseのImporter/Exporterをインストールする。
-
-- 手順2．3D City Databaseのi-UR1.4拡張モジュール（i-UR ADE extension for the 3D City Database）をダウンロードし、解凍する。
-
-- 手順3．手順2の解凍により作成された、iur-ade-citygml4j-1.4.0/org/citygml4j/ade/iur/schemaフォルダに格納された、4つのXMLSchemaファイル（拡張子.xsd）に含まれる、名前空間を更新（テキスト置換）する。
-
-
-|旧URL（i-UR1.4のURL）|新しいURL（i-UR1.5のURL）|
-| :- | :- |
-|`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/uro/1.4`|[https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/uro/1.5](http://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/uro/1.5)|
-|`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/urf/1.4`|[https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/urf/1.5](http://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/urf/1.5)|
-|`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/urg/1.4`|[https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/urg/1.5](http://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/urg/1.5)|
-|`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/urt/1.4`|https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/urt/1.5|
-
-
-- 手順4．3DCityDB-Importer-Exporter/ade-extensions/iur-ade-1.4.0/schema-mappingフォルダに格納された、schema-mapping.xmlに含まれる、i-URのバージョン情報及び名前空間のURLを更新（テキスト置換）する。
-
-|旧i-URのバージョン情報|新しいi-URのバージョン情報|
-| :- | :- |
-|`<version>1.4</version>`|`<version>1.5</version>`|
-|名前空間の旧URL（i-UR1.4のURL）|名前空間の新しいURL（i-UR1.5のURL）|
-|`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/uro/1.4`|[https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/uro/1.5](http://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/uro/1.5)|
-|`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/urf/1.4`|[https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/urf/1.5](http://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/urf/1.5)|
-|`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/urg/1.4`|[https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/urg/1.5](http://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/urg/1.5)|
-|`http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/urt/1.4`|https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/urt/1.5|
-
-- 手順5．手順1でインストールした3D City Database Importer/Exporterを起動し、ADEManagerから、更新したi-URのADEフォルダ（3DCityDB-Importer-Exporter/ade-extensions/iur-ade-1.4.0）を選択し、ADEとして登録する。
-
-なお、本ソフトウェアはドイツvirtualcitysystems社が開発した製品機能を、オープンソースとして公開するためご提供を頂いたものです。virtualcitysystems社に感謝します。
+対応データ形式は、内閣府地方創生推進事務局が定めた[i-都市再生技術仕様案 v2.0 (iｰUR 2.0)](https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/)に従い拡張された[OGC CityGML 2.0](https://www.ogc.org/standards/citygml)形式です。なお、i-URを利用していない通常のCityGML 2.0形式にも対応しています。
 
 ## 動作環境、前提ソフトウェア
 
@@ -143,7 +50,18 @@ i-UR ADE extension for the 3D City Databaseに記載されたi-URの名前空間
     ![111](doc/111.png)
     ![112](doc/112.png)
 
-## 利用手順2：DBスキーマ作成
+## 利用手順2：DB作成＋PostGISの拡張機能のロード
+1. 画面例はPostgreSQL+PostGISをWindows環境で利用する例
+
+1. PostgreSQLへ接続し、CREATE DATABASEを実行。
+    
+    ![600](doc/600.png)
+    
+1. 作成したcitydb_v4に接続し、CREATE EXTENSIONを実行。
+    
+    ![601](doc/601.png)
+    
+## 利用手順3：DBスキーマ作成
 1. 利用手順1でインストールしたフォルダから、環境に適したサブフォルダに移動。画面例はPostgreSQL+PostGISをWindows環境で利用する例。
 
     ![00](doc/200.png)
@@ -152,12 +70,17 @@ i-UR ADE extension for the 3D City Databaseに記載されたi-URの名前空間
 
     ![201](doc/201.png)
 
+    ※PGUSERをcitydb_userとする場合は別途ユーザーの作成、権限の付与が必要。なお、postgres等のスーパーユーザーでも問題ない。
+    ※PGBINにはPostgresSQLパスを入力するが、環境変数の編集にてPostgresSQLパスを登録しておく必要がある。
+    
+    ![204](doc/204.png)
+
 1. `CREATE_DB.bat` を実行、座標参照系（SRID）に`6697`と入力。その他はデフォルト値のままで実行。最後にDBパスワードの入力が必要。
 
     ![202](doc/202.png)
     ![203](doc/203.png)
 
-## 利用手順3：3D City Database Importer/Exporter起動
+## 利用手順4：3D City Database Importer/Exporter起動
 1. 利用手順1のインストール時に作成したショートカットを実行し、ソフトウェアを起動。
 
     ![300](doc/300.png)
@@ -168,17 +91,46 @@ i-UR ADE extension for the 3D City Databaseに記載されたi-URの名前空間
     ![302](doc/302.png)
     ![303](doc/303.png)
 
-## 利用手順4：i-UR 1.4 ADE設定
+## 利用手順5：i-UR 1.4からi-UR2.0更新
 1. 利用手順1でダウンロードしたiur-ade-1.4.0.zipを、Importer/Exporterのインストールフォルダ下の`ade-extensions`フォルダ直下に展開。
 
     ![400](doc/400.png)
+    
+1. 展開したiur-ade-1.4.0のlib内にあるiur-ade-citygml4j-1.4.0.jarを7-zip等の解凍ソフトで解凍。
+
+    ![403](doc/403.png)
+    
+1. 解凍すると下記のフォルダが現れる。
+
+    ![404](doc/404.png)
+    
+1. 下記のスキーマファイル全てを開き、下記の表に従い置換し、i-URの版を、1.4 から 2.0 に更新する。
+    
+    ![405](doc/405.png)
+    
+    |置換前|置換後|
+    | - | - |
+    |http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/uro/1.4|https://www.geospatial.jp/iur/uro/2.0|
+    |http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/urf/1.4|https://www.geospatial.jp/iur/urf/2.0|
+    |http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/urg/1.4|https://www.geospatial.jp/iur/urg/2.0|
+    |http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/urt/1.4|https://www.geospatial.jp/iur/urt/2.0|    
+    
+1. schema-mapping.xmlを開き、4．と同様に置換し、i-URの版を、1.4 から 2.0 に更新する。
+
+    ![406](doc/406.png)
+    
+    修正後は下図の通り`<version>1.4</version>`は`<version>2.0</version>`に変更する。
+    
+    またスキーマファイルと同様、名前空間の記載を変更する。
+
+    ![407](doc/407.png)
 
 1. Importer/Exporterの`ADE Manager`タブ①を開き、`Browse`②をクリックして上記のiur-ade-1.4.0フォルダを選択し、`Register ADE`をクリックして登録。
 
     ![401](doc/401.png)
     ![402](doc/402.png)
 
-## 利用手順5：書式・概念一貫性検証
+## 利用手順6：書式・概念一貫性検証
 1. Importer/Exporterの`Import`タブを開き、`Browse`①をクリックして検証したいCityGMLファイルを選択。なお、複数CityGMLファイルや、複数CityGMLファイルを圧縮したZIPファイルも選択可能。`Just validate`②をクリックし検証実行、検証結果はConsole画面③に出力される。
 
     ![500](doc/500.png)
